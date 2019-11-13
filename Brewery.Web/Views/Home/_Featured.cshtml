@@ -1,0 +1,95 @@
+﻿@model List<Brewery.Web.ViewModels.BrewsViewModel>
+
+<div class="container">
+    <h2>Featured Beers</h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal"></dl>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <div class="container">
+        @for (int i = 0; i < @Model.Count; i++)
+        {
+            <div class="col-md-4">
+                <h2><a href="@Model[i].Link">@Model[i].Name</a></h2>
+
+                @if (@Model[i].Description.Length > 100)
+                {
+                    <p>@Model[i].Description.Substring(0, 100)</p>
+                    <div id="collapse-@i" style="display:none">
+                        <p>@Model[i].Description.Substring(100)</p>
+                    </div>
+                    <a href="#collapse-@i" class="nav-toggle">Read More</a>
+                }
+                else
+                {
+                    <p>@Model[i].Description</p>
+                }
+
+                @if (Model[i].Recipes.Any())
+                {
+                    <br>
+                    <div id="collapseResource-@i" style="display:none">
+                        @for (int b = 0; b < @Model[i].Recipes.Count(); b++)
+                        {
+                            <h4>@Model[i].Recipes[b].Resource.Name</h4>
+                            <a href="@Model[i].Recipes[b].Resource.Link">@Model[i].Recipes[b].Resource.Link</a>
+                            <p>@Model[i].Recipes[b].Description</p>
+                            <p>Required Amount:@Model[i].Recipes[b].Amount @Model[i].Recipes[b].Unit</p>
+                        }
+                    </div>
+                    <a href="#collapseResource-@i" class="nav-toggle">Resources</a>
+                }
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="col-md-4">
+            <h2><a href="https://www.beermonthclub.com/past-selections/2019/mar">Erie Brewing Company - Railbender</a></h2>
+            <p>
+                This brew is Erie's flagship product, and it won gold at the 2009 GABF in the Scottish Ale category after taking the bronze the previous year. Pouring a very pretty, rich, amber color, Railbender is clearly a malt-forward beer from the first sniff. Lightly bready caramel malt aromas come forth right away, with a significant toffee-like quality. Expect the hops to be soft, adding a bit
+                of a leafy/woody quality with a touch of spice. Characteristic...
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2><a href="https://www.beermonthclub.com/wooha-brewing-company-wooha-porter">WooHa Brewing Company - WooHa Porter</a></h2>
+            <p>
+                WooHa's Porter pours a very dark brown with a cap of beige foam. As with many darker beers, we'd recommend letting this
+                brew warm for a few minutes out of the fridge before drinking, in order for the flavors to all emerge properly. In the aroma, we picked up plenty of roasted malt notes including bitter chocolate, coffee grounds, and scorched caramel, along with an undertone of raisin skin.
+            </p>
+            <div id="collapse-2" style="display:none">
+                <p>
+                    Those big roasty notes come through on the palate, too, with lots of roasted coffee character and a touch of smoke from the use of German rauch malt (which is smoked, usually with beechwood), adding a bit of a Bamberg-esque twist. Look for a mild, complementing bitterness and perhaps a touch of spice thanks to a mild use of British Phoenix hops. Quite dry from start to finish, relatively low in ABV, and without a dense body, this porter makes a great sessionable quaff all on its own, or in the company of food. For pairing options, grilled and smoked meats are easily our favorite complementary options, although sweet and chocolaty desserts can work as well, with the darker notes in the beer matching the chocolate in the dessert while the beer's roasted bitterness can contrast with the dessert's sweetness. Cheers!
+                </p>
+            </div>
+            <a href="#collapse-2" class="nav-toggle">Read More</a>
+        </div>
+        <div class="col-md-4">
+            <h2><a href="https://www.beermonthclub.com/jester-king-brewery-black-metal">Jester King Brewery - Black Metal</a></h2>
+            <p>
+                Jester King’s Black Metal currently sees very limited distribution, with only about 20 cases sold in the U.S. in 2018.
+                This year’s limited run will be predominantly heading to our Rare Beer Club members, with around 50 to 75 cases left over for distribution solely in Texas.
+
+            </p>
+            <div id="collapse-3" style="display:none">
+                <p>
+                    <br />
+                    Jester King Black Metal is brewed with a variety of malted barleys and rolled oats, English-style hops, aerated and filtered Texas Hill Country well water, and fermented with a mixture of traditional brewers yeast and locally harvested native yeast and bacteria (and black metal music played to the beer during fermentation, of course). It’s essentially pure black in color at first glance—it’s actually a super dark brown when held to a penetrating light source—blanketed by a very thick, brownish head. There’s a show on display here as cascading effects fizzle down the side of the glass at the interface of the liquid and foam formation.
+                    Make sure the beer is served at the correct temperature—cold is its only known weakness! Expect big notes of roasted
+                    barley from the start, with quite a bit of coffee, anise, and even some toffee, plus a little suggestion of the hefty 10.8% ABV, at least when this is served on the lower end of the suggested serving temperature (the alcohol does start to reveal itself with added temp). From the aroma alone, it seems like this beer might have been played a softer, gentler kind of black metal during fermentation, with comforting notes of treacle-ish, singed syrup and deep chocolate. But while it starts with some sweetness, this is quickly dried up by the unleashing of coffee (espresso, esp.), burnt currants, vinous warmth, scorched raisins and charred wood. Esters are perceived as low, but they are there if you look for them, offset by a bit of fruity impact from the alcohol. Black Metal finishes with heaps of coffee and treacle, and ends quite dry for the style, thanks to a very high attenuating traditional yeast strain. The sudden flash of citrus rind and earthy hoppiness contribute on the bitterness side, working nicely with the malt-derived bitterness from this beer’s specialty malt additions.
+                    <br />
+                    This beer’s certainly an anomaly for Texan beer—and Jester King’s Black Metal is also a bit anomalous for the style
+                    itself, remaining balanced for what it is and almost unnervingly easy to drink, with a sort of split personality: for those seeking out extended waves of flavor and intensity, you’ll get it. But if you’re seeking more subtlety and sophistication, you’ll get that too, though it may take a particularly refined palate to realize it given the richness of flavor. This is not just a big bad monster of a beer thrashing about, beating its chest and crushing beer cans on its forehead, but a well crafted, smart, interesting beast of a beer that manages to retain balance and poise. It’s an impressive juggling act, even for the ablest of jesters.
+                </p>
+            </div>
+            <a href="#collapse-3" class="nav-toggle">Read More</a>
+        </div>
+    </div>
+}
+

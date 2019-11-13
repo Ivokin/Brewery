@@ -1,0 +1,40 @@
+﻿@model List<Brewery.Web.ViewModels.ProducedGoodsViewModel>
+
+<div class="container">
+    <h2>Create new resource</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-controller="ResourceManager" asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @foreach (var brew in Model)
+                {
+                    <div class="form-group">
+                        <label asp-for="@brew.Name" class="control-label"></label>
+                        <input asp-for="@brew.Name" class="form-control" />
+                        <span asp-validation-for="@brew.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@brew.Amount." class="control-label"></label>
+                        <input asp-for="@brew.Amount" class="form-control" />
+                        <span asp-validation-for="@brew.Amount" class="text-danger"></span>
+                    </div>
+                    @foreach (var resourceName in brew.ResourceNames)
+                    {
+                        <div class="form-group">
+                            <input asp-for="@resourceName" class="form-control" />
+                            <span asp-validation-for="@resourceName" class="text-danger"></span>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to list.</a>
+    </div>
+</div>

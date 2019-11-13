@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Brewery.Web.ViewModels.BrewsViewModel>;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="container">
+    <br />
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+</div>
+<div class="container">
+    <table id="table_id" class="display">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var brew in Model)
+            {
+                <tr id="@brew.BrewId" data-id="@brew.BrewId">
+                    <td class="col-md-4">
+                        @Html.DisplayFor(modelItem => brew.Name)
+                    </td>
+                    <td class="col-md-4">
+                        @if (brew.Description.Length > 100)
+                        {
+                        <p>@brew.Description.Substring(0,100) ...</p>
+
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => brew.Description)
+                        }
+                    </td>
+                    <td class="col-md-4">
+                        <a asp-action="Edit" asp-route-id="@brew.BrewId">Edit</a> |
+                        <button type="button" class="btn btn-link btn-delete" data-id="@brew.BrewId">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="~/DataTables/datatables.css" />
+}
+
+@section Scripts{
+    <script type="text/javascript" charset="utf8" src="~/js/brews-management/delete-brew.js"></script>
+    <script type="text/javascript" charset="utf8" src="~/js/brews-management/return-button.js"></script>
+    <script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}
+
+
+

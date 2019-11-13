@@ -1,0 +1,18 @@
+﻿@model List<Brewery.Web.ViewModels.BrewsViewModel>
+@Html.Partial("_Carousel")
+
+<div class="container">
+    <h2>Brewery</h2>
+    <div>
+        <h4>by Ivo Ivanov</h4>
+        <hr />
+        <dl class="dl-horizontal"></dl>
+    </div>
+</div>
+
+@Html.Partial("_Featured", Model)
+@Html.Partial("_About")
+
+@section Scripts{
+    <script type="text/javascript" charset="utf8" src="~/js/index/indexHidShowText.js"></script>
+}

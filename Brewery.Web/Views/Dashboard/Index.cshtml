@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@{ string name = (string)ViewData["Name"]; }
+<div class="container">
+    <div class="col-md-12">
+        <img src="~/images/beerImgWelcome.jpg" id="bannerImg" class="img-responsive" />
+    </div>
+    <span />
+    <h1 class="text-xs-center">Welcome @name have a beer!</h1>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="/DataTables/datatables.css">
+}
+
+@section Scripts{
+    <script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
+}
+
+

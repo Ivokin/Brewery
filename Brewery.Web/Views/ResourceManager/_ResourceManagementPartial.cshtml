@@ -1,0 +1,74 @@
+﻿@model Brewery.Web.ViewModels.ResourceViewModel
+
+@{string operation = "Edit";}
+@if (Model.IsNew)
+{
+    operation = "Create";
+}
+
+@{
+    ViewData["Title"] = operation;
+}
+
+@if (Model != null && Model.IsValid.HasValue && Model.ShowAlert)
+{
+    if (Model.IsValid.Value)
+    {
+        <div class="alert alert-success">
+            <strong>Success.</strong>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <strong>Fail.</strong>
+        </div>
+    }
+}
+
+<div class="container">
+    @if (operation.Equals("Create"))
+    {
+        <h2>Create new resource.</h2>
+    }
+    else
+    {
+        <h2>Edit @Model.Name.</h2>
+    }
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-controller="ResourceManager" asp-action=@operation>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Link" class="control-label"></label>
+                    <input asp-for="Link" class="form-control" />
+                    <span asp-validation-for="Link" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AmountInStock" class="control-label"></label>
+                    <input asp-for="AmountInStock" class="form-control" />
+                    <span asp-validation-for="AmountInStock" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Unit" class="control-label"></label>
+                    <input asp-for="Unit" class="form-control" />
+                    <span asp-validation-for="AmountInStock" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

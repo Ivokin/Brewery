@@ -1,0 +1,19 @@
+﻿@model Brewery.Web.ViewModels.BrewsViewModel
+
+@{
+    ViewData["Title"] = "BrewsManagement";
+}
+
+@Html.Partial("_BrewManagementPartial", Model);
+
+@section Scripts {
+    <script src="~/js/brews-management/add-resource.js"></script>
+    <script src="~/js/brews-management/remove-resource.js"></script>
+    <script src="~/js/brews-management/return-button.js"></script>
+    <script src="~/js/brews-management/on-select-change.js"></script>
+    <script src="~/js/brews-management/on-resource-change.js"></script>
+}
+
+
+
+

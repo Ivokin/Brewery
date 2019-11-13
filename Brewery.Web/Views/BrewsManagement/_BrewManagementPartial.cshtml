@@ -1,0 +1,159 @@
+﻿@model Brewery.Web.ViewModels.BrewsViewModel
+
+@{string operation = "Create";}
+@{List<string>filterResources = new List<string>();}
+
+@if (!Model.IsNew.HasValue)
+{
+    operation = "Edit";
+}
+
+@Html.AntiForgeryToken()
+
+    <div class="container">
+        @if (operation.Equals("Create"))
+        {
+            <h2>Create new recipe.</h2>
+        }
+        else
+        {
+            <h2>Edit @Model.Name.</h2>
+        }
+
+        <hr />
+        @if (Model.ShowAlert)
+        {
+            if (Model.IsValid.Value)
+            {
+                <div class="alert alert-success">
+                    <strong>Success.</strong>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    <strong>Fail.</strong>
+                </div>
+            }
+        }
+        <form asp-controller="BrewsManagement" asp-action="@operation" method="POST">
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+                <a href="~/BrewsManagement/Index" class="btn btn-default">Return</a>
+            </div>
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr class="noborder">
+                                    <th class="noborder">
+                                        <label asp-for="@Model.Name" class="control-label"></label>
+                                    </th>
+                                    <th class="noborder">
+                                        <label asp-for="@Model.Link" class="control-label"></label>
+                                    </th>
+                                </tr>
+                                <tr class="noborder">
+                                    <th class="noborder">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <input type="hidden" asp-for="BrewId" />
+                                        <div>
+                                            <input asp-for="@Model.Name" class="form-control" />
+                                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                                        </div>
+                                    </th>
+                                    <th class="noborder">
+                                        <div>
+                                            <input asp-for="@Model.Link" class="form-control" />
+                                            <span asp-validation-for="@Model.Link" class="text-danger"></span>
+                                        </div>
+                                    </th>
+                                    <th class="noborder">
+
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="noborder">
+                                        <label asp-for="@Model.Description" class="control-label"></label>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="noborder">
+                                        <div>
+                                            <textarea asp-for="@Model.Description" rows="5" class="form-control"></textarea>
+                                            <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr class="noborder">
+                                    <th class="noborder">
+                                        Resource
+                                    </th>
+                                    <th class="noborder">
+                                        Description
+                                    </th>
+                                    <th class="noborder">
+                                        Required Amount
+                                    </th>
+                                    <th class="noborder">
+                                    </th>
+                                    <th class="noborder">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody">
+                                @{filterResources = Model.Recipes.Select(x => x.ResourceName).ToList();}
+                                @for (int i = 0; i < Model.Recipes.Count; i++)
+                                {
+                                    filterResources.Remove(Model.Recipes[i].ResourceName);
+                                    <tr class="data-row noborder" id="@i">
+                                        <td class="noborder" id="responseName-@i">
+                                            <select id="@i" class="form-control select-resource" asp-for="@Model.Recipes[i].ResourceName">
+                                                @for (int a = 0; a < Model.ResoucesSelect.Count; a++)
+                                                {
+                                                    if (!filterResources.Contains(Model.ResoucesSelect[a].Text))
+                                                    {
+                                                        <option id="@Model.ResoucesSelect[a].Value" value="@Model.ResoucesSelect[a].Text">@Model.ResoucesSelect[a].Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </td>
+                                        <td class="noborder" id="responseDescription">
+                                            <input asp-for="@Model.Recipes[i].Description" class="form-control" />
+                                        </td>
+                                        <td class="noborder col-sm-1" id="responseValue">
+                                            <input asp-for="@Model.Recipes[i].Amount" value="@Model.Recipes[i].Amount" class="form-control input-group-text" />
+                                        </td>
+                                        <td class="noborder" id="responseValue">
+                                            @if (string.IsNullOrEmpty(@Model.Recipes[i].Unit))
+                                            {
+                                                <div id="unit-@i">@Model.ResoucesSelect[i].Value</div>
+                                            }
+                                            else
+                                            {
+                                                <div id="unit-@i">@Model.Recipes[i].Unit</div>
+                                            }
+                                            <input type="hidden" asp-for="@Model.Recipes[i].IsNew" value="@Model.Recipes[i].IsNew" class="form-control" />
+                                        </td>
+                                        <td class="noborder">
+                                            <button id="removeResource" type="button" class="btn btn-link removeresource" data-id="@i">Remove Resource</button>
+                                        </td>
+                                    </tr>
+                                    filterResources.Add(Model.Recipes[i].ResourceName);
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr id="brew-buttons">
+                                    <td class="noborder">
+                                        <input id="add" type="button" value="Add Resource" class="btn btn-default" />
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </form>
+    </div>

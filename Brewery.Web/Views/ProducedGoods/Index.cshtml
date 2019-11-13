@@ -1,0 +1,75 @@
+﻿@model List<Brewery.Web.ViewModels.ProducedGoodsViewModel>
+
+<div class="container">
+    <h2>Produce Goods</h2>
+    <hr />
+    <table id="table_id" class="display">
+        <thead>
+            <tr>
+                <th class="col-lg-4">
+                    Name
+                </th>
+                <th class="col-sm-1">
+                    Amount
+                </th>
+                <th class="col-sm-1">
+                    Avaible
+                </th>
+                <th class="col-sm-2">
+                    Save
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+            <tr id="@i">
+                @{ string resourceNames = string.Empty; }
+                @if (!Model[i].ResourceNames.Any())
+                {
+                    resourceNames = "No resources found.";
+                }
+                @foreach (var name in Model[i].ResourceNames)
+                {
+                    resourceNames += name + Environment.NewLine;
+                }
+                <td title="@resourceNames">
+                    @Html.DisplayFor(model => Model[i].Name)
+                </td>
+                <td>
+                    <input id="amount-@i" type="number" />
+                </td>
+                <td>
+                    <div class="avaible" id="@Model[i].Id">
+                        @Model[i].Avaible
+                    </div>
+                </td>
+                <td>
+                    @if (@Model[i].Avaible > 0)
+                    {
+                        <button class="save btn btn-success" id="@i" value="@Model[i].Id"><small><span class="glyphicon glyphicon-ok"></span></small></button>
+                    }
+                    else
+                    {
+                        <button class="save btn btn-secondary" id="@i" value="@Model[i].Id"><small><span class="glyphicon glyphicon-ok"></span></small></button>
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="~/DataTables/datatables.css" />
+}
+
+@section Scripts{
+    <script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
+    <script type="text/javascript" charset="utf-8" src="~/js/produced-goods/save-changes.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable({});
+        });
+    </script>
+}

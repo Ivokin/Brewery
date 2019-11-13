@@ -1,0 +1,60 @@
+﻿@model List<Brewery.Web.ViewModels.ResourceViewModel>
+
+<div class="container">
+    <h2>Resources</h2>
+    <p>
+        <a asp-action="Create">Create Resource</a>
+    </p>
+
+    <table id="table_id" class="display">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    Unit
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="@item.Id">
+                    <th>
+                        @Html.DisplayFor(model => item.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayFor(model => item.AmountInStock)
+                    </th>
+                    <th>
+                        @Html.DisplayFor(model => item.Unit)
+                    </th>
+                    <th>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <button id="@item.Id" type="button" class="btn btn-link deleteresource" data-id="@item.Id">Delete</button>
+                    </th>
+                </tr>
+            }
+            </tbody>
+    </table>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="~/DataTables/datatables.css" />
+}
+
+@section Scripts{
+    <script type="text/javascript" charset="utf8" src="~/js/resource-management/delete-resource.js"></script>
+    <script type="text/javascript" charset="utf8" src="~/js/resource-management/filter-by-name.js"></script>
+    <script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}
